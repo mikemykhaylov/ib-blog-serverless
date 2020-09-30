@@ -1,0 +1,22 @@
+{
+  "name": "ib-blog-serverless",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prettier": "prettier --config ./.prettierrc.yml --write \"./**/*.js\"",
+    "eslint": "eslint -c ./.eslintrc.yml \"./**/*.js\""
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "prettier": "^2.1.2",
+    "serverless-offline": "^6.8.0"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "lorem-ipsum": "^2.0.3",
+    "mongoose": "^5.10.7"
+  }
+}
