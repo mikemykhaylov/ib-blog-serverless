@@ -7,8 +7,6 @@ provider:
   region: eu-central-1
 
 functions:
-  hello:
-    handler: handler.hello
   create:
     handler: handler.create # point to exported create function in handler.js
     events:

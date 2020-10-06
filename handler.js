@@ -1,32 +1,15 @@
+require('dotenv').config({ path: './variables.env' });
+const middy = require('@middy/core');
+const cors = require('@middy/http-cors');
 const { LoremIpsum } = require('lorem-ipsum');
 
 const connectToDatabase = require('./db');
-require('dotenv').config({ path: './variables.env' });
 const Post = require('./models/Post');
 
-module.exports.hello = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
-  return {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    },
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2,
-    ),
-  };
-};
+const handlers = {};
+const middyfiedHandlers = {};
 
-// Use this code if you don't use the http event with the LAMBDA-PROXY integration
-// return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-
-module.exports.create = async (event, context, callback) => {
+handlers.create = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   await connectToDatabase();
@@ -53,7 +36,7 @@ module.exports.create = async (event, context, callback) => {
   }
 };
 
-module.exports.populate = async (event, context, callback) => {
+handlers.populate = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   await connectToDatabase();
@@ -105,7 +88,7 @@ module.exports.populate = async (event, context, callback) => {
   }
 };
 
-module.exports.getOne = async (event, context, callback) => {
+handlers.getOne = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   await connectToDatabase();
@@ -129,7 +112,7 @@ module.exports.getOne = async (event, context, callback) => {
   }
 };
 
-module.exports.getPage = async (event, context, callback) => {
+handlers.getPage = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   await connectToDatabase();
@@ -164,7 +147,7 @@ module.exports.getPage = async (event, context, callback) => {
   }
 };
 
-module.exports.update = async (event, context, callback) => {
+handlers.update = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   await connectToDatabase();
@@ -192,7 +175,7 @@ module.exports.update = async (event, context, callback) => {
   }
 };
 
-module.exports.delete = async (event, context, callback) => {
+handlers.delete = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   await connectToDatabase();
@@ -218,3 +201,9 @@ module.exports.delete = async (event, context, callback) => {
     });
   }
 };
+
+Object.entries(handlers).forEach(([key, handler]) => {
+  middyfiedHandlers[key] = middy(handler).use(cors());
+});
+
+module.exports = middyfiedHandlers;
