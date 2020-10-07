@@ -16,7 +16,7 @@ class PostAPI extends DataSource {
       .sort({ postedOn: -1 })
       .limit(pageSize || 28);
     if (pageNumber) {
-      foundPostsQuery = foundPostsQuery.skip((pageNumber - 1) * pageSize || 28);
+      foundPostsQuery = foundPostsQuery.skip((pageNumber - 1) * (pageSize || 28));
     }
     const foundPosts = await foundPostsQuery.exec();
     const postsCount = await Post.countDocuments(searchCriteria);
