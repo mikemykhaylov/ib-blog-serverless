@@ -11,7 +11,7 @@
     "eslint": "^7.10.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "prettier": "^2.1.2",
     "serverless-offline": "^6.8.0"
   },
@@ -23,6 +23,6 @@
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
     "lorem-ipsum": "^2.0.3",
-    "mongoose": "^5.10.7"
+    "mongoose": "^5.10.9"
   }
 }
