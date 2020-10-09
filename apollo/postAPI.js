@@ -49,7 +49,7 @@ class PostAPI extends DataSource {
           author: 'Michael M.',
           content,
           description: lorem.generateSentences(3),
-          image: `https://ib-blog-user-data.s3.eu-central-1.amazonaws.com/programming${
+          image: `https://d12pzozt82468o.cloudfront.net/programming${
             i % 10
           }.webp`,
           indexName: title.toLowerCase().replace(/ /g, '-'),
