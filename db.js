@@ -10,7 +10,8 @@ module.exports = async () => {
   }
 
   console.log('=> using new database connection');
-  const db = await mongoose.connect(process.env.DB, {
+  const dbAdress = process.env.DB || `${process.env.LOCALDB}ib-blog-mongo`;
+  const db = await mongoose.connect(dbAdress, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

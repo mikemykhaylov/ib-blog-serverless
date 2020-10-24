@@ -1,11 +1,10 @@
+---
 service: ib-blog-serverless
 frameworkVersion: "2"
-
 provider:
   name: aws
   runtime: nodejs12.x
   region: eu-central-1
-
 functions:
   graphql:
     handler: graphql.graphqlHandler
@@ -18,48 +17,5 @@ functions:
           path: graphql
           method: get
           cors: true
-  create:
-    handler: handler.create # point to exported create function in handler.js
-    events:
-      - http:
-          path: posts # path will be domain.name.com/dev/posts
-          method: post
-          cors: true
-  populate:
-    handler: handler.populate # point to exported create function in handler.js
-    events:
-      - http:
-          path: posts/populate # path will be domain.name.com/dev/posts
-          method: post
-          cors: true
-  getOne:
-    handler: handler.getOne
-    events:
-      - http:
-          path: posts/{id} # path will be domain.name.com/dev/posts/1
-          method: get
-          cors: true
-  getPage:
-    handler: handler.getPage # path will be domain.name.com/dev/posts
-    events:
-      - http:
-          path: posts
-          method: get
-          cors: true
-  update:
-    handler: handler.update # path will be domain.name.com/dev/posts/1
-    events:
-      - http:
-          path: posts/{id}
-          method: put
-          cors: true
-  delete:
-    handler: handler.delete
-    events:
-      - http:
-          path: posts/{id} # path will be domain.name.com/dev/posts/1
-          method: delete
-          cors: true
-
 plugins:
   - serverless-offline
