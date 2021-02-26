@@ -1,13 +1,21 @@
----
-service: ib-blog-serverless
+org: mmykhaylov
+app: ib-cs-ee-serverless
+service: ib-personal-blog
 frameworkVersion: "2"
 provider:
   name: aws
   runtime: nodejs12.x
   region: eu-central-1
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
+  tracing:
+    lambda: true
 functions:
   graphql:
     handler: graphql.graphqlHandler
+    environment:
+      DB: ${param:dbURL}
     events:
       - http:
           path: graphql
@@ -22,4 +30,3 @@ custom:
 plugins:
   - serverless-offline
   - serverless-api-compression
-
