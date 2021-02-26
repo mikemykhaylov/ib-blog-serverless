@@ -1,31 +1,49 @@
 /* eslint-disable class-methods-use-this */
 const { DataSource } = require('apollo-datasource');
-const mongoose = require('mongoose');
-
 const { LoremIpsum } = require('lorem-ipsum');
+const { UserInputError } = require('apollo-server-lambda');
 
 const Post = require('../models/Post');
 
 class PostAPI extends DataSource {
-  async getPage({ pageNumber, pageSize, tag }) {
+  async getPosts({ postsNumber, tag }) {
     const searchCriteria = {};
     if (tag) {
       searchCriteria.tag = tag;
     }
-    let foundPostsQuery = Post.find(searchCriteria, { content: 0 })
-      .sort({ postedOn: -1 })
-      .limit(pageSize || 28);
-    if (pageNumber) {
-      foundPostsQuery = foundPostsQuery.skip((pageNumber - 1) * (pageSize || 28));
+    let foundPostsQuery = Post.find(searchCriteria).sort({ postedOn: -1 });
+    if (postsNumber) {
+      foundPostsQuery = foundPostsQuery.limit(postsNumber);
     }
     const foundPosts = await foundPostsQuery.exec();
-    const postsCount = await Post.countDocuments(searchCriteria);
-    return Array.isArray(foundPosts) ? { foundPosts, postsCount } : [];
+    return Array.isArray(foundPosts) ? foundPosts : [];
   }
 
-  async getPost({ id }) {
-    const foundPost = await Post.findOne({ indexName: id }, { description: 0 });
-    return foundPost instanceof mongoose.Error ? {} : foundPost;
+  async getPost({ postID }) {
+    try {
+      const foundPost = await Post.findById(postID);
+      if (foundPost) {
+        return foundPost;
+      }
+      return undefined;
+    } catch (err) {
+      throw new UserInputError('Post ID is invalid');
+    }
+  }
+
+  async getPage({ pageNumber, tag }) {
+    const PAGE_SIZE = 28;
+    const searchCriteria = {};
+    if (tag) {
+      searchCriteria.tag = tag;
+    }
+    let foundPostsQuery = Post.find(searchCriteria).sort({ postedOn: -1 }).limit(PAGE_SIZE);
+    if (pageNumber) {
+      foundPostsQuery = foundPostsQuery.skip((pageNumber - 1) * PAGE_SIZE);
+    }
+    const pagePosts = await foundPostsQuery.exec();
+    const totalPostsCount = await Post.countDocuments(searchCriteria);
+    return Array.isArray(pagePosts) ? { pagePosts, totalPostsCount } : [];
   }
 
   async populate({ postsCount }) {

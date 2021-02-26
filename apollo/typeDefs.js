@@ -2,8 +2,9 @@ const { gql } = require('apollo-server-lambda');
 
 const typeDefs = gql`
   type Query {
-    posts(pageNumber: Int, pageSize: Int, tag: String): PostConnection!
-    post(id: ID!): Post
+    getPage(pageNumber: Int!, tag: String): PostConnection!
+    getPosts(postsNumber: Int, tag: String): [Post!]
+    getPost(postID: ID!): Post
   }
   type PostConnection {
     hasMore: Boolean!
@@ -19,10 +20,10 @@ const typeDefs = gql`
     tag: String!
     title: String!
     readingTime: Int!
-    _id: ID!
+    id: ID!
   }
   type Mutation {
-    populate(postsCount: Int!): String!
+    createPosts(postsCount: Int!): String!
   }
 `;
 

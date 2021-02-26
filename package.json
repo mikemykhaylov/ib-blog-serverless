@@ -8,22 +8,22 @@
     "eslint": "eslint -c ./.eslintrc.yml \"./**/*.js\""
   },
   "devDependencies": {
-    "eslint": "^7.12.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.14.0",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
-    "prettier": "^2.1.2",
+    "prettier": "^2.2.1",
     "serverless-api-compression": "^1.0.1",
     "serverless-offline": "^6.8.0"
   },
   "dependencies": {
-    "@middy/core": "^1.4.0",
-    "@middy/http-cors": "^1.4.0",
-    "apollo-datasource": "^0.7.2",
-    "apollo-server-lambda": "^2.18.2",
+    "@middy/core": "^1.5.2",
+    "@middy/http-cors": "^1.5.2",
+    "apollo-datasource": "^0.7.3",
+    "apollo-server-lambda": "^2.21.0",
     "dotenv": "^8.2.0",
-    "graphql": "^15.3.0",
+    "graphql": "^15.5.0",
     "lorem-ipsum": "^2.0.3",
-    "mongoose": "^5.10.10"
+    "mongoose": "^5.11.18"
   }
 }

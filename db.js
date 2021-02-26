@@ -11,12 +11,16 @@ module.exports = async () => {
 
   console.log('=> using new database connection');
   const dbAdress = process.env.DB || `${process.env.LOCALDB}ib-blog-mongo`;
-  const db = await mongoose.connect(dbAdress, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  });
-  connection.isConnected = db.connections[0].readyState;
+  try {
+    const db = await mongoose.connect(dbAdress, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    });
+    connection.isConnected = db.connections[0].readyState;
+  } catch (err) {
+    console.log(err)
+  }
   return Promise.resolve();
 };
